@@ -1,0 +1,49 @@
+body {
+	padding-left: 15em;
+	font-family: Georgia, "Times New Roman",
+   		Times, serif;
+	color: black;
+	background-color: white;
+}
+ul.navbar {
+	position: absolute;
+	top: 2em;
+	left: 1em;
+	width: 10em;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	border-right: 0.2em solid black;
+}
+li.navbar {
+	background: white;
+	margin: 0.5em 0;
+	padding: 0.3em;
+	border-right: 0.2em solid black;
+}
+ul.navbar a {
+	text-decoration: none;
+}
+a:link {
+	color: black;
+}
+a:visited {
+	color: black;
+}
+table {
+	border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
+}
+td,th {
+	border: 1px solid black; /* auront une bordure de 1px */
+}
+tr.d0 {
+	background-color:#E9FFE9; /* lightgreen */
+}
+tr.d1 {
+	background-color:#EBF5FF; /* lightblue */
+}
+address {
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: thin dotted;
+}
