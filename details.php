@@ -90,10 +90,10 @@ echo "</table>";
 if (isset($_GET['serverId'])) {
 ?>
 <table class="table table-striped table-bordered table-hover table-condensed">
-	<tr class="success"><th>JobId</th><th>Level</th><th>SchedTime</th><th>StartTime</th><th>Nombre de fichier</th><th>Volume backup&eacute;</th><th>Job Status</th></tr>
+	<tr class="success"><th>JobId</th><th>Level</th><th>SchedTime</th><th>StartTime</th><th>EndTime</th><th>Duration</th><th>Nombre de fichier</th><th>Volume backup&eacute;</th><th>Job Status</th></tr>
 <?php
 	$SQLserverDetail = $bdd->prepare('
-		SELECT JobId,Job,Job.Name AS Name,Level,SchedTime, StartTime, JobFiles, JobBytes, JobStatus
+		SELECT JobId,Job,Job.Name AS Name,Level,SchedTime, StartTime, JobFiles, JobBytes, JobStatus, RealEndTime
 		FROM Job
 		INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
 		WHERE grp.customer_id=?
@@ -103,6 +103,11 @@ if (isset($_GET['serverId'])) {
 
 	$SQLserverDetail->execute(array($clientId, $_GET['serverId']));
 	while ($serverDetail = $SQLserverDetail->fetch()) {
+		
+		// Time spent calculation for job duration
+		$startdate = new DateTime($serverDetail['StartTime']);
+		$enddate = new DateTime($serverDetail['RealEndTime']);
+		$duration = date_diff($startdate,$enddate);
 
 		if ($serverDetail['JobStatus'] == "f") { echo "<tr class=\"danger\">"; }
 		else if ($serverDetail['JobStatus'] == "A") { echo "<tr class=\"danger\">"; }
@@ -115,6 +120,8 @@ if (isset($_GET['serverId'])) {
 		printf("<td>%s</td>", ConvertBaculaBackupLevel($serverDetail['Level']));
 		printf("<td>%s</td>", $serverDetail['SchedTime']);
 		printf("<td>%s</td>", $serverDetail['StartTime']);
+		printf("<td>%s</td>", $serverDetail['RealEndTime']);
+		echo "<td>" . $duration->format('%H:%I:%S') . "</td>";
 		printf("<td>%s</td>", $serverDetail['JobFiles']);
 		printf("<td>%s</td>", FileSizeConvert($serverDetail['JobBytes']));
 		printf("<td>%s</td>", ConvertBaculaJobStatus($serverDetail['JobStatus']));

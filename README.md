@@ -14,5 +14,6 @@ Install :
 - Show the repports generated
 
 History :
-- 2017-08-17 : Adding storage pool information table for each client
+- 2017-08-17 : Adding details for each job : endtime, and calculated duration
+- 2017-04-25 : Adding storage pool information table for each client
 - 2016-07-12 : first commit(s)
