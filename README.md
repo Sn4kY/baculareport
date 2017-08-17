@@ -12,3 +12,7 @@ Install :
 - Create your Customers (with billing information)
 - Associate the Bacula's client to your customers groups created before
 - Show the repports generated
+
+History :
+- 2017-08-17 : Adding storage pool information table for each client
+- 2016-07-12 : first commit(s)

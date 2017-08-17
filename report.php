@@ -9,41 +9,41 @@ require_once("navbar.php");
 <h1>Backup Reporting</h1>
 <table class="table table-striped table-bordered table-hover table-condensed">
 <?php #    <caption><div>Reporting de backup</div></caption> ?>
- 	<tr class="info"><th><a href="report.php">Name</a></th><th><a href="report.php?tri=total">Total</a></th><th><a href="report.php?tri=factu">Factur&eacute;</a></th><th><a href="report.php?tri=depassement">Depassement</a></th></tr>
+ 	<tr class="info"><th><a href="report.php">Name</a></th><th><a href="report.php?order=total">Total</a></th><th><a href="report.php?order=factu">Factur&eacute;</a></th><th><a href="report.php?order=depassement">Depassement</a></th></tr>
 <?php
 $query='
-SELECT factu.name, sum(Job.JobBytes) AS Bytes, factu.vol_factu, factu.id_grp, sum(Job.JobBytes)-factu.vol_factu AS Depassement
+SELECT billing.customer_name, SUM(Job.JobBytes) AS Bytes, billing.vol_factu, billing.customer_id, sum(Job.JobBytes)-billing.vol_factu AS Depassement
 FROM Job
-INNER JOIN grp_cli_assoc grp ON grp.id_client = Job.ClientId
-INNER JOIN grp_factu factu ON factu.id_grp=grp.id_grp
-WHERE factu_new = "false"
+INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
+INNER JOIN customer_billing billing ON billing.customer_id=grp.customer_id
+WHERE full_billing = "false"
 AND Job.Type = "B"
-GROUP BY factu.name
+GROUP BY billing.customer_name
 ';
 // Requete pour le nouveau mode de facturation
-$query_factu_new='SELECT name, SUM(MaxFull) AS Bytes, vol_factu, id_grp, SUM(MaxFull)-vol_factu AS Depassement
+$query_full_billing='SELECT customer_name, SUM(MaxFull) AS Bytes, vol_factu, customer_id, SUM(MaxFull)-vol_factu AS Depassement
 FROM (
-SELECT factu.name, MAX(Job.JobBytes) AS MaxFull, factu.vol_factu, factu.id_grp
+SELECT billing.customer_name, MAX(Job.JobBytes) AS MaxFull, billing.vol_factu, billing.customer_id
 FROM Job
-INNER JOIN grp_cli_assoc grp ON grp.id_client = Job.ClientId
-INNER JOIN grp_factu factu ON factu.id_grp=grp.id_grp
-WHERE factu_new = "true" AND Level = "F"
+INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
+INNER JOIN customer_billing billing ON billing.customer_id=grp.customer_id
+WHERE full_billing = "true" AND Level = "F"
 AND Job.Type = "B"
 GROUP BY grp.name) AS Full_Max
-GROUP BY name
+GROUP BY customer_name
 ';
-if (isset($_GET['tri'])) {
-	if ($_GET['tri']=="depassement") {
+if (isset($_GET['order'])) {
+	if ($_GET['order']=="depassement") {
 		$query = $query . "ORDER BY Depassement DESC";
-		$query_factu_new = $query_factu_new . "ORDER BY Depassement DESC";
+		$query_full_billing = $query_full_billing . "ORDER BY Depassement DESC";
 	}
-	if ($_GET['tri']=="total") {
+	if ($_GET['order']=="total") {
 		$query = $query . "ORDER BY Bytes DESC";
-		$query_factu_new = $query_factu_new . "ORDER BY Bytes DESC";
+		$query_full_billing = $query_full_billing . "ORDER BY Bytes DESC";
 	}
-	if ($_GET['tri']=="factu") {
+	if ($_GET['order']=="factu") {
 		$query = $query . "ORDER BY vol_factu DESC";
-		$query_factu_new = $query_factu_new . "ORDER BY vol_factu DESC";
+		$query_full_billing = $query_full_billing . "ORDER BY vol_factu DESC";
 	}
 }
 
@@ -81,9 +81,9 @@ while ($row = $result->fetch()) {
 
 $result->closeCursor();
 ?>
-<tr class="info"><th colspan=4><a name="New">NOUVEAU</a></th></tr>
+<tr class="info"><th colspan=4><a name="New">Max FULL JobBytes</a></th></tr>
 <?php
-$result = $bdd->query($query_factu_new);
+$result = $bdd->query($query_full_billing);
 while ($row = $result->fetch()) {
 	$i++;
 #	printf("<tr class=\"d".($i & 1)."\"><td><a href=details.php?clientId=%s>%s</a></td>", $row[3], $row[0]);
@@ -94,8 +94,8 @@ while ($row = $result->fetch()) {
 	$VolHFactu=FileSizeConvert($VolFactu);
 #	$Depassement=$VolFactu - $JobBytes;
 	$Depassement = $row[4];
-	$TotalJobBytes=$TotalJobBytes + $JobBytes * 6;
-	$TotalVolFactu = $TotalVolFactu + $VolFactu *6;
+	$TotalJobBytes=$TotalJobBytes + $JobBytes * 7;
+	$TotalVolFactu = $TotalVolFactu + $VolFactu * 7;
 	printf("<td>%s</td>",$JobHBytes);
 	printf("<td>%s</td>",$VolHFactu);
 	if ($Depassement > 0) {
@@ -103,7 +103,7 @@ while ($row = $result->fetch()) {
 		$HDepassement=FileSizeConvert($Depassement);
 		printf("<td>%s <img src=fouet.gif /> soit %s&#37; de d&eacute;passement</td>",$HDepassement,$DepasPercent);
 		$nbr_depassements++;
-		$TotalDepassement = $TotalDepassement + $Depassement * 6 ;
+		$TotalDepassement = $TotalDepassement + $Depassement * 7;
 	} else {
 		printf("<td></td>");
 	}
@@ -113,7 +113,7 @@ $result->closeCursor();
 ?>
 <tr class="danger"><td>TOTAL</td><td><?php echo FileSizeConvert($TotalJobBytes); ?></td><td><?php echo FileSizeConvert($TotalVolFactu); ?></td><td><?php echo FileSizeConvert($TotalDepassement); ?></td></tr>
 </table>
-<p>Les totaux du nouveau mode de factu sont x6 pour approximer la r&eacute;alit&eacute;.</p>
+<p>Les totaux du nouveau mode de factu sont x7 pour approximer la r&eacute;alit&eacute;.</p>
 <address>
 Nombre de clients : <?php echo $i; ?><br />
 Nombre de d&eacute;passements : <?php echo $nbr_depassements; ?>... t'as encore du taff !!!</address>

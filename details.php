@@ -14,35 +14,35 @@ require_once("navbar.php");
 $i=0; //increment pour la couleur du tableau
 $clientId = sprintf("%d",$_GET['clientId']);
 $result = $bdd->prepare('
-SELECT name, SUM(BytesTotal) AS TotalFullDiff, vol_factu, SUM(MaxFull) AS TotalMaxFull, factu_new
+SELECT customer_name, SUM(BytesTotal) AS TotalFullDiff, vol_factu, SUM(MaxFull) AS TotalMaxFull, full_billing
 FROM (
-SELECT factu.name, MAX(Job.JobBytes) AS MaxFull, factu.vol_factu, SUM(Job.JobBytes) AS BytesTotal, factu_new
+SELECT factu.customer_name, MAX(Job.JobBytes) AS MaxFull, factu.vol_factu, SUM(Job.JobBytes) AS BytesTotal, full_billing
 FROM Job
-INNER JOIN grp_cli_assoc grp ON grp.id_client = Job.ClientId
-INNER JOIN grp_factu factu ON factu.id_grp=grp.id_grp
-WHERE factu.id_grp=?
+INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
+INNER JOIN customer_billing factu ON factu.customer_id=grp.customer_id
+WHERE factu.customer_id=?
 AND Job.Type = "B"
 GROUP BY grp.name) AS Full_Max
-GROUP BY name;');
+GROUP BY customer_name;');
 
 /*$result = $bdd->prepare('
 SELECT factu.name, sum(Job.JobBytes) AS Bytes, factu.vol_factu
 FROM Job
-INNER JOIN grp_cli_assoc grp ON grp.id_client = Job.ClientId
-INNER JOIN grp_factu factu ON factu.id_grp=grp.id_grp
-WHERE factu.id_grp=?');
+INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
+INNER JOIN customer_billing factu ON factu.customer_id=grp.customer_id
+WHERE factu.customer_id=?');
 */
 
 $result->execute(array($clientId));
 	while ($row = $result->fetch()) {
 		$i++;
-		$clientName = $row['name'];
+		$clientName = $row['customer_name'];
 		printf("<tr><td>%s</td>", $clientName);
 		$JobBytes=$row['TotalFullDiff'];
 		$JobHBytes=FileSizeConvert($JobBytes);
 		$VolFactu=$row['vol_factu'];
 		$VolHFactu=FileSizeConvert($VolFactu);
-		if ($row['factu_new'] == "true") $Depassement = $row['TotalMaxFull'] - $VolFactu;
+		if ($row['full_billing'] == "true") $Depassement = $row['TotalMaxFull'] - $VolFactu;
 		else $Depassement = $JobBytes - $VolFactu;
 		printf("<td>%s</td>",FileSizeConvert($row['TotalMaxFull']));
 		printf("<td>%s</td>",$JobHBytes);
@@ -62,14 +62,15 @@ $result->execute(array($clientId));
 <p></p>
 <table class="table table-striped table-bordered table-hover table-condensed">
 	<caption>Details du client <?php echo $clientName; ?></caption>
-	<tr class="warning"><th>Serveur</th><th>Plus gros Full</th><th>Total Full+Diff</th></tr>
+	<tr class="warning"><th>Serveur</th><th>Filer</th><th>Plus gros Full</th><th>Total Full+Diff</th></tr>
 <?php
 $result = $bdd->prepare('
-SELECT grp.name, MAX(Job.JobBytes) AS BigFull, sum(Job.JobBytes) TotalFull, grp.id_client
+SELECT grp.name, MAX(Job.JobBytes) AS BigFull, sum(Job.JobBytes) TotalFull, grp.id_client, sto_assoc.storage_name
 FROM Job
-INNER JOIN grp_cli_assoc grp ON grp.id_client = Job.ClientId
-INNER JOIN grp_factu factu ON factu.id_grp=grp.id_grp
-WHERE factu.id_grp=?
+INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
+INNER JOIN customer_billing factu ON factu.customer_id=grp.customer_id
+INNER JOIN storage sto_assoc ON sto_assoc.storage_id=grp.storage_id
+WHERE factu.customer_id=?
 AND Job.Type = "B"
 GROUP BY grp.name;');
 
@@ -77,6 +78,7 @@ $result->execute(array($clientId));
 while ($row = $result->fetch()) {
 	$i++;
 	printf("<tr><td><a href=\"details.php?clientId=%s&serverId=%s\">%s</a></td>", $clientId , $row[3] , $row[0]);
+	printf("<td>%s</td>",$row[4]);
 	printf("<td>%s</td>",FileSizeConvert($row[1]));
 	printf("<td>%s</td>",FileSizeConvert($row[2]));
 	echo "</tr>";
@@ -93,8 +95,8 @@ if (isset($_GET['serverId'])) {
 	$SQLserverDetail = $bdd->prepare('
 		SELECT JobId,Job,Job.Name AS Name,Level,SchedTime, StartTime, JobFiles, JobBytes, JobStatus
 		FROM Job
-		INNER JOIN grp_cli_assoc grp ON grp.id_client = Job.ClientId
-		WHERE grp.id_grp=?
+		INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
+		WHERE grp.customer_id=?
 		AND Job.Type = "B"
 		AND id_client=?
 	');
