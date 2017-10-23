@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.55, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.57, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: bacula_report
 -- ------------------------------------------------------
--- Server version	5.5.55-0+deb7u1-log
+-- Server version	5.5.57-0+deb7u1-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -52,7 +52,7 @@ CREATE TABLE `Job` (
   `Comment` blob,
   PRIMARY KEY (`JobId`),
   KEY `Name` (`Name`(128))
-) ENGINE=InnoDB AUTO_INCREMENT=186288 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=204296 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +67,7 @@ CREATE TABLE `client_customer_assoc` (
   `customer_id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `storage_id` int(11) NOT NULL DEFAULT '1',
+  `day_full` enum('1','2','3','4','5','6','7') NOT NULL,
   UNIQUE KEY `id_client` (`id_client`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Association table for customer/billing group';
@@ -87,7 +88,7 @@ CREATE TABLE `customer_billing` (
   PRIMARY KEY (`customer_id`),
   UNIQUE KEY `id_grp` (`customer_id`),
   UNIQUE KEY `name` (`customer_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,4 +115,4 @@ CREATE TABLE `storage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-17  8:56:07
+-- Dump completed on 2017-10-23 11:07:48
