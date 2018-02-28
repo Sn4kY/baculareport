@@ -46,7 +46,7 @@ ORDER BY Job.Name
 ';
 $query_list_client='SELECT customer_id, customer_name FROM customer_billing ORDER BY customer_name;';
 
-$query_list_storage='SELECT storage_id, storage_name FROM storage ORDER BY storage_name';
+$query_list_storage='SELECT storage_id, storage_name FROM storage WHERE enabled="1" ORDER BY storage_name';
 
 $bdd_find_srv_noassoc = $bdd->query($query_find_srv_noassoc);
 if ( $bdd_find_srv_noassoc->rowCount() != 0 ) {

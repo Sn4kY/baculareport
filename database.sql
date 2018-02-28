@@ -101,6 +101,7 @@ DROP TABLE IF EXISTS `storage`;
 CREATE TABLE `storage` (
   `storage_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `storage_name` varchar(100) NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`storage_id`),
   UNIQUE KEY `storage_id` (`storage_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -115,4 +116,4 @@ CREATE TABLE `storage` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-28 12:05:23
+-- Dump completed on 2018-02-28 12:18:18
