@@ -46,10 +46,10 @@ $result->execute(array($clientId));
 		else $Depassement = $JobBytes - $VolFactu;
 		printf("<td>%s</td>",FileSizeConvert($row['TotalMaxFull']));
 		printf("<td>%s</td>",$JobHBytes);
-		printf("<td>%s</td>",$VolHFactu);
+		printf("<td>%s <a href=\"edit.php&clientId=%s\"><img src=\"res/edit.png\" alt=\"edit\" /></a></td>",$VolHFactu, $clientId);
 		if ($Depassement > 0) {
 			$HDepassement=FileSizeConvert($Depassement);
-			printf("<td>%s <img src=fouet.gif /></td>",$HDepassement);
+			printf("<td>%s <img src=res/fouet.gif /></td>",$HDepassement);
 		} else {
 			printf("<td></td>");
 		}

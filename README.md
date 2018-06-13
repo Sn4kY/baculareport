@@ -14,6 +14,7 @@ Install :
 - Show the repports generated
 
 History :
+- 2018-06-13 : creating res directory
 - 2018-02-28 : Changing customer\_billing.customer\_name to utf8\_general\_ci ; Changing method to add data customer name to DB; Adding possibility do disable a storage device
 - 2017-11-03 : Correcting the SQL Queries in the associate script to select only jobs of type Backup and level Full to obtain the name of the Client (otherwise, restoreJob is sometimes associated to the ID of the clientName)
 - 2017-10-23 : Adding to database at which day the full is to be running. - USEFUL only if you're running ONE full every week, and diff/incr others times

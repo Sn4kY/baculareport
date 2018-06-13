@@ -70,7 +70,7 @@ while ($row = $result->fetch()) {
 	if ($Depassement > 0) {
 		$DepasPercent= round(($Depassement / $VolFactu) * 100,2);
 		$HDepassement=FileSizeConvert($Depassement);
-		printf("<td>%s <img src=fouet.gif /> soit %s&#37; de d&eacute;passement</td>",$HDepassement,$DepasPercent);
+		printf("<td>%s <img src=res/fouet.gif /> soit %s&#37; de d&eacute;passement</td>",$HDepassement,$DepasPercent);
 		$nbr_depassements++;
 		$TotalDepassement = $TotalDepassement + $Depassement;
 	} else {
@@ -101,7 +101,7 @@ while ($row = $result->fetch()) {
 	if ($Depassement > 0) {
 		$DepasPercent= round(($Depassement / $VolFactu) * 100,2);
 		$HDepassement=FileSizeConvert($Depassement);
-		printf("<td>%s <img src=fouet.gif /> soit %s&#37; de d&eacute;passement</td>",$HDepassement,$DepasPercent);
+		printf("<td>%s <img src=res/fouet.gif /> soit %s&#37; de d&eacute;passement</td>",$HDepassement,$DepasPercent);
 		$nbr_depassements++;
 		$TotalDepassement = $TotalDepassement + $Depassement * 7;
 	} else {
