@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.58, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.60, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: bacula_report
 -- ------------------------------------------------------
--- Server version	5.5.58-0+deb7u1-log
+-- Server version	5.5.60-0+deb7u1-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -52,19 +52,18 @@ CREATE TABLE `Job` (
   `Comment` blob,
   PRIMARY KEY (`JobId`),
   KEY `Name` (`Name`(128))
-) ENGINE=InnoDB AUTO_INCREMENT=243015 DEFAULT CHARSET=latin1;
-INSERT INTO `Job` (`JobId`, `Job`, `Name`, `Type`, `Level`, `ClientId`, `JobStatus`, `SchedTime`, `StartTime`, `EndTime`, `RealEndTime`, `JobTDate`, `VolSessionId`, `VolSessionTime`, `JobFiles`, `JobBytes`, `ReadBytes`, `JobErrors`, `JobMissingFiles`, `PoolId`, `FileSetId`, `PriorJobId`, `PurgedFiles`, `HasBase`, `HasCache`, `Reviewed`, `Comment`) VALUES
-(325528, 0x64656d6f736572766572312e323031382d31302d32375f30302e31312e32365f3334, 0x64656d6f73657276657231, 'B', 'F', 401, 'T', '2018-10-27 00:11:26', '2018-10-27 03:35:17', '2018-10-27 03:35:17', '2018-10-27 03:35:17', 1540604117, 5449, 1539332291, 0, 0, 0, 1, 0, 7, 429, 0, 0, 0, 0, 0, ''),
-(325563, 0x64656d6f736572766572312e323031382d31302d32385f30302e31312e32365f3334, 0x64656d6f73657276657231, 'B', 'D', 401, 'T', '2018-10-27 00:11:32', '2018-10-27 04:12:39', '2018-10-27 04:12:39', '2018-10-27 04:12:39', 1540606359, 5521, 1539332291, 0, 0, 0, 0, 0, 7, 480, 0, 0, 0, 0, 0, ''),
-(325867, 0x64656d6f736572766572312e323031382d31302d32395f30302e31312e32365f3334, 0x64656d6f73657276657231, 'B', 'D', 401, 'T', '2018-10-28 00:11:04', '2018-10-28 06:58:34', '2018-10-28 06:58:35', '2018-10-28 06:58:35', 1540706315, 5781, 1539332291, 0, 0, 0, 0, 0, 7, 387, 0, 0, 0, 0, 0, ''),
-(325900, 0x64656d6f736572766572312e323031382d31302d33305f30302e31312e32365f3334, 0x64656d6f73657276657231, 'B', 'D', 401, 'T', '2018-10-28 00:11:06', '2018-10-28 07:54:32', '2018-10-28 07:54:33', '2018-10-28 07:54:33', 1540709673, 5815, 1539332291, 0, 0, 0, 0, 0, 7, 429, 0, 0, 0, 0, 0, ''),
-(325937, 0x64656d6f736572766572312e323031382d31302d33315f30302e31312e32365f3334, 0x64656d6f73657276657231, 'B', 'D', 401, 'T', '2018-10-28 00:11:09', '2018-10-28 09:51:11', '2018-10-28 09:51:14', '2018-10-28 09:51:14', 1540716674, 5864, 1539332291, 0, 0, 0, 0, 0, 7, 480, 0, 0, 0, 0, 0, ''),
-(326038, 0x64656d6f736572766572322e323031382d31302d32375f30302e31312e32365f3334, 0x64656d6f73657276657232, 'B', 'F', 402, 'T', '2018-10-29 00:11:00', '2018-10-29 03:00:43', '2018-10-29 03:00:44', '2018-10-29 03:00:44', 1540778444, 6049, 1539332291, 0, 0, 0, 0, 0, 7, 186, 0, 0, 0, 0, 0, ''),
-(326104, 0x64656d6f736572766572322e323031382d31302d32385f30302e31312e32365f3334, 0x64656d6f73657276657232, 'B', 'D', 402, 'T', '2018-10-29 00:11:06', '2018-10-29 04:12:14', '2018-10-29 04:12:38', '2018-10-29 04:12:38', 1540782758, 6076, 1539332291, 0, 0, 0, 0, 0, 7, 213, 0, 0, 0, 0, 0, ''),
-(326214, 0x64656d6f736572766572322e323031382d31302d32395f30302e31312e32365f3334, 0x64656d6f73657276657232, 'B', 'D', 402, 'T', '2018-10-29 00:11:18', '2018-10-29 04:59:35', '2018-10-29 05:00:24', '2018-10-29 05:00:24', 1540785624, 6113, 1539332291, 0, 0, 0, 0, 0, 7, 329, 0, 0, 0, 0, 0, ''),
-(326215, 0x64656d6f736572766572322e323031382d31302d33305f30302e31312e32365f3334, 0x64656d6f73657276657232, 'B', 'D', 402, 'T', '2018-10-29 00:11:19', '2018-10-29 05:00:26', '2018-10-29 05:00:37', '2018-10-29 05:00:37', 1540785637, 6114, 1539332291, 0, 0, 0, 0, 0, 7, 332, 0, 0, 0, 0, 0, ''),
-(326216, 0x64656d6f736572766572322e323031382d31302d33315f30302e31312e32365f3334, 0x64656d6f73657276657232, 'B', 'D', 402, 'T', '2018-10-29 00:11:19', '2018-10-29 05:00:39', '2018-10-29 05:00:50', '2018-10-29 05:00:50', 1540785650, 6115, 1539332291, 0, 0, 0, 0, 0, 7, 333, 0, 0, 0, 0, 0, '');
+) ENGINE=InnoDB AUTO_INCREMENT=326217 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Job`
+--
+
+LOCK TABLES `Job` WRITE;
+/*!40000 ALTER TABLE `Job` DISABLE KEYS */;
+INSERT INTO `Job` VALUES (325528,'demoserver1.2018-10-27_00.11.26_34','demoserver1','B','F',401,'T','2018-10-27 00:11:26','2018-10-27 03:35:17','2018-10-27 03:35:17','2018-10-27 03:35:17',1540604117,5449,1539332291,15069,1587018063753,1589958167877,1,0,7,429,0,0,0,0,0,''),(325563,'demoserver1.2018-10-28_00.11.26_34','demoserver1','B','D',401,'T','2018-10-27 00:11:32','2018-10-27 04:12:39','2018-10-27 04:12:39','2018-10-27 04:12:39',1540606359,5521,1539332291,12,12556231687,13539663821,0,0,7,480,0,0,0,0,0,''),(325867,'demoserver1.2018-10-29_00.11.26_34','demoserver1','B','D',401,'T','2018-10-28 00:11:04','2018-10-28 06:58:34','2018-10-28 06:58:35','2018-10-28 06:58:35',1540706315,5781,1539332291,302,3539663821,3539663821,0,0,7,387,0,0,0,0,0,''),(325900,'demoserver1.2018-10-30_00.11.26_34','demoserver1','B','D',401,'T','2018-10-28 00:11:06','2018-10-28 07:54:32','2018-10-28 07:54:33','2018-10-28 07:54:33',1540709673,5815,1539332291,85,11509663821,11509663819,0,0,7,429,0,0,0,0,0,''),(325937,'demoserver1.2018-10-31_00.11.26_34','demoserver1','B','D',401,'T','2018-10-28 00:11:09','2018-10-28 09:51:11','2018-10-28 09:51:14','2018-10-28 09:51:14',1540716674,5864,1539332291,65,1150663821,0,0,0,7,480,0,0,0,0,0,''),(326038,'demoserver2.2018-10-27_00.11.26_34','demoserver2','B','F',402,'T','2018-10-29 00:11:00','2018-10-29 03:00:43','2018-10-29 03:00:44','2018-10-29 03:00:44',1540778444,6049,1539332291,147852,1587063753,0,0,0,7,186,0,0,0,0,0,''),(326104,'demoserver2.2018-10-28_00.11.26_34','demoserver2','B','D',402,'T','2018-10-29 00:11:06','2018-10-29 04:12:14','2018-10-29 04:12:38','2018-10-29 04:12:38',1540782758,6076,1539332291,125,157063753,0,0,0,7,213,0,0,0,0,0,''),(326214,'demoserver2.2018-10-29_00.11.26_34','demoserver2','B','D',402,'T','2018-10-29 00:11:18','2018-10-29 04:59:35','2018-10-29 05:00:24','2018-10-29 05:00:24',1540785624,6113,1539332291,86,187063753,0,0,0,7,329,0,0,0,0,0,''),(326215,'demoserver2.2018-10-30_00.11.26_34','demoserver2','B','D',402,'T','2018-10-29 00:11:19','2018-10-29 05:00:26','2018-10-29 05:00:37','2018-10-29 05:00:37',1540785637,6114,1539332291,74,587063753,0,0,0,7,332,0,0,0,0,0,''),(326216,'demoserver2.2018-10-31_00.11.26_34','demoserver2','B','D',402,'T','2018-10-29 00:11:19','2018-10-29 05:00:39','2018-10-29 05:00:50','2018-10-29 05:00:50',1540785650,6115,1539332291,12,158703753,0,0,0,7,333,0,0,0,0,0,'');
+/*!40000 ALTER TABLE `Job` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `client_customer_assoc`
@@ -82,10 +81,17 @@ CREATE TABLE `client_customer_assoc` (
   UNIQUE KEY `id_client` (`id_client`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Association table for customer/billing group';
-INSERT INTO `client_customer_assoc` (`id_client`, `customer_id`, `name`, `storage_id`, `day_full`) VALUES
-(401, 1, 'demoserver1', 1, '7'),
-(402, 2, 'demoserver2', 1, '5');
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `client_customer_assoc`
+--
+
+LOCK TABLES `client_customer_assoc` WRITE;
+/*!40000 ALTER TABLE `client_customer_assoc` DISABLE KEYS */;
+INSERT INTO `client_customer_assoc` VALUES (401,1,'demoserver1',1,'1'),(402,2,'demoserver2',1,'5');
+/*!40000 ALTER TABLE `client_customer_assoc` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `customer_billing`
@@ -103,11 +109,17 @@ CREATE TABLE `customer_billing` (
   UNIQUE KEY `id_grp` (`customer_id`),
   UNIQUE KEY `name` (`customer_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8;
-
-INSERT INTO `customer_billing` (`customer_id`, `customer_name`, `vol_factu`, `full_billing`) VALUES
-(1, 'Customer 1', 53687091200, 'true'),
-(2, 'Customer 2', 644245094400, 'true');
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer_billing`
+--
+
+LOCK TABLES `customer_billing` WRITE;
+/*!40000 ALTER TABLE `customer_billing` DISABLE KEYS */;
+INSERT INTO `customer_billing` VALUES (1,'Customer 1',53687091200,'true'),(2,'Customer 2',644245094400,'true');
+/*!40000 ALTER TABLE `customer_billing` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `storage`
@@ -123,8 +135,17 @@ CREATE TABLE `storage` (
   PRIMARY KEY (`storage_id`),
   UNIQUE KEY `storage_id` (`storage_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-INSERT INTO `storage` (`storage_id`, `storage_name`, `enabled`) VALUES (1, 'Filer 1', 1);
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `storage`
+--
+
+LOCK TABLES `storage` WRITE;
+/*!40000 ALTER TABLE `storage` DISABLE KEYS */;
+INSERT INTO `storage` VALUES (1,'Filer 1',1);
+/*!40000 ALTER TABLE `storage` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -135,4 +156,4 @@ INSERT INTO `storage` (`storage_id`, `storage_name`, `enabled`) VALUES (1, 'File
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-28 12:18:18
+-- Dump completed on 2019-03-18 18:26:11
