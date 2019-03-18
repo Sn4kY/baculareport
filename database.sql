@@ -83,8 +83,8 @@ CREATE TABLE `client_customer_assoc` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Association table for customer/billing group';
 INSERT INTO `client_customer_assoc` (`id_client`, `customer_id`, `name`, `storage_id`, `day_full`) VALUES
-(1, 1, 'demoserver1', 1, '7'),
-(2, 2, 'demoserver2', 1, '5');
+(401, 1, 'demoserver1', 1, '7'),
+(402, 2, 'demoserver2', 1, '5');
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
