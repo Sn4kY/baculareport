@@ -13,6 +13,7 @@ require_once("navbar.php");
 <?php
 $i=0; //increment pour la couleur du tableau
 $clientId = sprintf("%d",$_GET['clientId']);
+// Customer Infos
 $result = $bdd->prepare('
 SELECT customer_name, SUM(BytesTotal) AS TotalFullDiff, vol_factu, SUM(MaxFull) AS TotalMaxFull, full_billing
 FROM (
@@ -119,6 +120,8 @@ if (isset($_GET['serverId']) && !isset($_GET['unlink'])) {
 	$SQLserverDetail->execute(array($clientId, $_GET['serverId']));
 	while ($serverDetail = $SQLserverDetail->fetch()) {
 		
+		$ServerName=$serverDetail['Name'];
+
 		// Time spent calculation for job duration
 		$startdate = new DateTime($serverDetail['StartTime']);
 		$enddate = new DateTime($serverDetail['RealEndTime']);
@@ -136,16 +139,34 @@ if (isset($_GET['serverId']) && !isset($_GET['unlink'])) {
 		printf("<td>%s</td>", $serverDetail['SchedTime']);
 		printf("<td>%s</td>", $serverDetail['StartTime']);
 		printf("<td>%s</td>", $serverDetail['RealEndTime']);
-		echo "<td>" . $duration->format('%H:%I:%S') . "</td>";
+		if ($duration->format('%a') >= 1) { echo "<td>" . (($duration->format('%a') * 24) + $duration->format('%H')) . ":" . $duration->format('%I:%S') . "</td>";} else  echo "<td>" . $duration->format('%H:%I:%S') . "</td>";
 		printf("<td>%s</td>", $serverDetail['JobFiles']);
 		printf("<td>%s</td>", FileSizeConvert($serverDetail['JobBytes']));
 		printf("<td>%s</td>", ConvertBaculaJobStatus($serverDetail['JobStatus']));
 		echo "</tr>";
+
 	}
 	
 
 }
 ?>
 </table>
+<?php
+// Block used to print backupplan in a textarea
+// displayed only if serverId is set
+if (isset($_GET['serverId']) && !isset($_GET['unlink'])) {
+printf("<p><div>BackupPlan</div></p>");
+	$SQLBackupPlan = $bdd->prepare('
+		SELECT backupplan
+		FROM client_customer_assoc
+		WHERE name=?
+	');
+	$SQLBackupPlan->execute(array($ServerName));
+	while ($serverBackupPlan = $SQLBackupPlan->fetch())
+	{	
+		printf("<pre>%s</pre>", $serverBackupPlan['backupplan']);
+	}
+}
+?>
 </body>
 </html>
