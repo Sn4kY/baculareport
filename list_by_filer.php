@@ -9,7 +9,7 @@ $query_list_storage='SELECT storage_id, storage_name FROM storage WHERE enabled=
 
 // Filer details ordered by size
 $query_list_jobs_per_storage = $bdd->prepare('
-SELECT grp.name AS client_name, MAX(Job.JobBytes) AS BigFull, sum(Job.JobBytes) TotalFull
+SELECT grp.name AS client_name, MAX(Job.JobBytes) AS BigFull, sum(Job.JobBytes) TotalFull, grp.customer_id AS customer_id, grp.id_client AS client_id
 FROM Job
 INNER JOIN client_customer_assoc grp ON grp.id_client = Job.ClientId
 INNER JOIN customer_billing factu ON factu.customer_id=grp.customer_id
@@ -27,7 +27,7 @@ ORDER BY TotalFull DESC;
 <?php
 $bdd_list_storage_link = $bdd->query($query_list_storage);
 while ($list_storage = $bdd_list_storage_link->fetch()) {
-	printf("<li class=\"info\"><a href=\"order_by_filer.php#%s\">%s</a></li>", $list_storage['storage_id'], $list_storage['storage_name']);
+	printf("<li class=\"info\"><a href=\"%s#%s\">%s</a></li>", $_SERVER['PHP_SELF'] , $list_storage['storage_id'], $list_storage['storage_name']);
 }
 ?>
 </ul>
@@ -43,7 +43,7 @@ while ($list_storage = $bdd_list_storage->fetch()) {
 	$query_list_jobs_per_storage->execute(array($list_storage['storage_id']));
 	while ($jobs_per_storage = $query_list_jobs_per_storage->fetch()){
 		$i++;
-		printf("<tr><td>%s</td>", $jobs_per_storage['client_name']);
+		printf("<tr><td><a href=\"details.php?clientId=%s&serverId=%s\">%s</a></td>", $jobs_per_storage['customer_id'], $jobs_per_storage['client_id'], $jobs_per_storage['client_name']);
 		printf("<td>%s</td>",FileSizeConvert($jobs_per_storage['BigFull']));
 		printf("<td>%s</td></tr>",FileSizeConvert($jobs_per_storage['TotalFull']));
 	}
